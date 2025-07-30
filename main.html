@@ -1,13 +1,63 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voting Eligibility Form</title>
+</head>
+<body>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <h2>Check if you can vote</h2>
+  
+  
+  <form id="voteForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" /><br /><br />
 
-  <body>
-    <!-- write the body here -->
+    <label for="age">Age:</label>
+    <input type="number" id="age" /><br /><br />
 
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    <button type="submit" id="btn">Submit</button>
+  </form>
+
+  <script>
+  
+    const form = document.getElementById('voteForm');
+    const nameInput = document.getElementById('name');
+    const ageInput = document.getElementById('age');
+
+    // ✅ Add submit event listener
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // prevent default form submission
+
+      const name = nameInput.value.trim();
+      const age = parseInt(ageInput.value);
+
+      // ✅ Validation
+      if (!name || isNaN(age)) {
+        alert("Please enter valid details.");
+        return;
+      }
+
+      // ✅ Promise for Voting Eligibility
+      const checkVotingEligibility = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (age > 18) {
+            resolve(name);
+          } else {
+            reject(name);
+          }
+        }, 4000); // 4 second delay
+      });
+
+      checkVotingEligibility
+        .then((username) => {
+          alert(`Welcome, ${username}. You can vote.`);
+        })
+        .catch((username) => {
+          alert(`Oh sorry ${username}. You aren't old enough.`);
+        });
+    });
+  </script>
+
+</body>
 </html>
